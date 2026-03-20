@@ -8,7 +8,7 @@ export default function LoginPage() {
         e.preventDefault();
         // Aquí ira mi lógica de Supabase después
         // Por ahora, simulamos que entra con éxito:
-        navigate('/inventario'); 
+        navigate('/Ventas'); 
     };
 return (
     <>

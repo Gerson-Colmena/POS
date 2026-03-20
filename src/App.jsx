@@ -3,7 +3,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Tema from './components/ThemeToggle';
 import Inventario from './pages/InventarioPage';
+import Central from './pages/CentralLayout';
+import Ventas from './pages/VentasPage';
+import Reportes from './pages/ReportesPage';
+import Dashboard from './pages/DashboardPage';
 import './App.css'
+import DashboardPage from './pages/DashboardPage';
 
 function App() {
   
@@ -18,7 +23,13 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/Inventario" element={<Inventario/>} />
+          
+          <Route element={<Central />}>
+            <Route path="/Ventas" element={<Ventas/>} />
+            <Route path="/Inventario" element={<Inventario/>} />
+            <Route path="/Reportes" element={<Reportes/>} />
+            <Route path="/Dashboard" element={<DashboardPage/>} />
+          </Route>
         </Routes>
       </div>
     </Router>
