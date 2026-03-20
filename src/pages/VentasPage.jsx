@@ -10,3 +10,4 @@ const VentasPage = () => {
 };
 
 export default VentasPage;
+    
