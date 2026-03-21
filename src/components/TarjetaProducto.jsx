@@ -1,7 +1,9 @@
 import React from 'react';
-import { PlusCircle, Edit3 } from 'lucide-react'; // Necesitas instalar lucide-react
+import BotonEditar from './BotonEditar';
+import BotonEliminar from './BotonEliminar';
+import { PlusCircle} from 'lucide-react'; // Necesitas instalar lucide-react
 
-export default function TarjetaProducto({ producto, mostrarVender = true }) {
+export default function TarjetaProducto({ producto, mostrarVender = true, onEditClick, onDeleteClick }) {
     // Formateador de moneda (Bolivianos en este ejemplo)
     const formatearPrecio = (valor) => {
         return new Intl.NumberFormat('es-BO', { style: 'currency', currency: 'BOB' }).format(valor);
@@ -44,10 +46,14 @@ export default function TarjetaProducto({ producto, mostrarVender = true }) {
         <div className="px-5 pb-5 pt-1 border-t border-gray-100 dark:border-gray-700/50 mt-1 flex justify-between gap-3 transition-colors">
             
             {/* Botón secundario: Editar (Para Inventario) */}
-            <button className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 transition-colors">
-            <Edit3 size={14} />
-            Editar
-            </button>
+            {/* USAMOS EL NUEVO BOTÓN MODULAR */}
+            <div className="flex gap-4">
+                {/* Si nos pasan onEditClick, dibujamos el botón de editar */}
+                {onEditClick && <BotonEditar onClick={onEditClick} />}
+                
+                {/* Si nos pasan onDeleteClick, dibujamos el botón de eliminar */}
+                {onDeleteClick && <BotonEliminar onClick={onDeleteClick} />}
+            </div>  
 
             {/* Botón primario: Añadir (Para Ventas) */}
             {/* Solo dibuja el botón si mostrarVender es true */}

@@ -1,27 +1,66 @@
 import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
 import BarraBusqueda from '../components/BarraBusqueda';
-import GridProductos from '../components/GridProductos';
 import ModalAñadirProducto from '../components/ModalAñadirProducto';
+import ModalEditarProducto from '../components/ModalEditarProducto'; // 1. Faltaba importar este modal
 import Notificacion from '../components/Notificacion';
 import TarjetaProducto from '../components/TarjetaProducto';
+import ModalConfirmacion from '../components/ModalConfirmacion';
 
 export default function InventarioPage() {
+    // Estados para la notificación global y el modal de Añadir
     const [textoBusqueda, setTextoBusqueda] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [notificacion, setNotificacion] = useState({ mensaje: '', tipo: '' });
+    // === ESTADOS PARA EL MODAL DE ELIMINAR ===
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [productoAEliminar, setProductoAEliminar] = useState(null);
 
-    // Productos simulados
-    const [productosDisponibles] = useState([
+    // 2. NUEVOS ESTADOS PARA EDICIÓN (El cerebro del modal de editar)
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [productoAEditar, setProductoAEditar] = useState(null);
+
+    // 3. Modifiqué esta línea para incluir 'setProductosDisponibles', 
+    //    así podemos actualizar la lista cuando edites un producto.
+    const [productosDisponibles, setProductosDisponibles] = useState([
         { id: 101, nombre: 'Earthen Bottle', precio: 48.00, stock: 3, imagenUrl: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-01.jpg' },
-        // ... tus otros productos ...
+        { id: 102, nombre: 'Nomad Tumbler', precio: 35.50, stock: 22, imagenUrl: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-02.jpg' },
+        { id: 103, nombre: 'Focus Paper', precio: 89.00, stock: 50, imagenUrl: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-03.jpg' },
     ]);
 
-    // Lógica cuando se confirma el formulario del Modal
+    // === LÓGICA DEL MODAL DE AÑADIR ===
     const handleGuardarProducto = () => {
-        setIsModalOpen(false); // Cierra el modal
-        // Muestra la notificación de éxito (puedes probar cambiando 'exito' por 'error')
+        setIsModalOpen(false);
         setNotificacion({ mensaje: '¡Producto agregado al inventario con éxito!', tipo: 'exito' });
+    };
+    // Función para abrir la ventana de advertencia
+    const handleAbrirEliminar = (productoElegido) => {
+        setProductoAEliminar(productoElegido);
+        setIsDeleteModalOpen(true);
+    };
+    const handleConfirmarEliminar = () => {
+        // Filtramos la lista: nos quedamos con todos los productos MENOS el que queremos eliminar
+        setProductosDisponibles(prevProductos => 
+            prevProductos.filter(p => p.id !== productoAEliminar.id)
+        );
+        setIsDeleteModalOpen(false); // Cerramos el modal
+        setProductoAEliminar(null); // Limpiamos el cerebro
+        setNotificacion({ mensaje: 'Producto eliminado del inventario.', tipo: 'exito' });
+    };
+
+    // 4. === NUEVA LÓGICA DEL MODAL DE EDITAR ===
+    const handleAbrirEditor = (productoElegido) => {
+        setProductoAEditar(productoElegido); // Cargamos el producto al estado
+        setIsEditModalOpen(true);            // Abrimos el modal
+    };
+
+    const handleCambiosGuardados = (productoActualizado) => {
+        // Actualizamos la lista reemplazando el viejo por el nuevo
+        setProductosDisponibles(prevProductos => 
+            prevProductos.map(p => p.id === productoActualizado.id ? productoActualizado : p)
+        );
+        // Mostramos el mensaje de éxito
+        setNotificacion({ mensaje: '¡Producto actualizado con éxito!', tipo: 'exito' });
     };
 
     return (
@@ -52,21 +91,42 @@ export default function InventarioPage() {
             {/* TARJETAS DE PRODUCTOS ACTUALES */}
             {productosDisponibles.map((prod) => (
                 <TarjetaProducto 
-                key={prod.id} 
-                producto={prod} 
-                mostrarVender={false} // ¡Magia! Aquí ocultamos el botón de vender
+                  key={prod.id} 
+                  producto={prod} 
+                  mostrarVender={false}
+                  // 5. ¡AQUÍ ESTÁ LA MAGIA! Le pasamos la función a la tarjeta
+                  onEditClick={() => handleAbrirEditor(prod)} 
+                  onDeleteClick={() => handleAbrirEliminar(prod)} //
                 />
             ))}
             </div>
         </div>
 
         {/* COMPONENTES FLOTANTES */}
+        
+        {/* 6. Volví a colocar el Modal de Añadir (lo habías borrado en tu código anterior) */}
         <ModalAñadirProducto 
             isOpen={isModalOpen} 
             onClose={() => setIsModalOpen(false)} 
             onConfirm={handleGuardarProducto} 
         />
-        
+
+        {/* 7. Modal de Editar */}
+        {isEditModalOpen && productoAEditar && (
+            <ModalEditarProducto 
+              onClose={() => setIsEditModalOpen(false)} 
+              producto={productoAEditar} 
+              onSaveSucces={handleCambiosGuardados} 
+            />
+        )}
+        {/* 8. Modal de Confirmación para Eliminar (¡Este era el que faltaba!) */}
+        <ModalConfirmacion
+            isOpen={isDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+            onConfirm={handleConfirmarEliminar}
+            titulo="¿Eliminar producto?"
+            mensaje={`Estás a punto de eliminar "${productoAEliminar?.nombre}". Esta acción no se puede deshacer.`}
+        />
         <Notificacion 
             mensaje={notificacion.mensaje} 
             tipo={notificacion.tipo} 
