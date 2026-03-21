@@ -1,7 +1,7 @@
 import React from 'react';
 import { PlusCircle, Edit3 } from 'lucide-react'; // Necesitas instalar lucide-react
 
-export default function TarjetaProducto({ producto }) {
+export default function TarjetaProducto({ producto, mostrarVender = true }) {
     // Formateador de moneda (Bolivianos en este ejemplo)
     const formatearPrecio = (valor) => {
         return new Intl.NumberFormat('es-BO', { style: 'currency', currency: 'BOB' }).format(valor);
@@ -20,12 +20,7 @@ export default function TarjetaProducto({ producto }) {
             className="h-full w-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
             />
             
-            {/* Badge de Stock (Opcional, muy útil para POS) */}
-            {producto.stock <= 5 && (
-            <div className="absolute top-3 right-3 bg-red-500/90 text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-sm">
-                Bajo Stock: {producto.stock}
-            </div>
-            )}
+            
         </div>
 
         {/* 2. SECCIÓN TEXTO E INFO */}
@@ -55,10 +50,13 @@ export default function TarjetaProducto({ producto }) {
             </button>
 
             {/* Botón primario: Añadir (Para Ventas) */}
-            <button className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-1 py-2 rounded-lg shadow-sm transition-all active:scale-95">
-            <PlusCircle size={18} />
-            Vender
-            </button>
+            {/* Solo dibuja el botón si mostrarVender es true */}
+            {mostrarVender && (
+                <button className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-1 py-2 rounded-lg shadow-sm transition-all active:scale-95">
+                    <PlusCircle size={18} />
+                    Vender
+                </button>
+            )}
         </div>
         </div>
     );

@@ -17,7 +17,7 @@ export default function VentasPage() {
     ]);
 
     return (
-        <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-7rem)]">
+        <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-9rem)]">
         
         {/* COLUMNA IZQUIERDA: Buscador y Catálogo */}
             <div className="w-full lg:w-2/3 h-full flex flex-col gap-4">
