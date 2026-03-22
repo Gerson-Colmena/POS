@@ -1,6 +1,6 @@
 import React from 'react';
 import { AlertTriangle } from 'lucide-react';
-import BotonUI from './BotonUI'; // ¡Reutilizamos tu botón inteligente!
+import BotonUI from '../ui/BotonUI'; // ¡Reutilizamos tu botón inteligente!
 
 export default function ModalConfirmacion({ isOpen, onClose, onConfirm, titulo, mensaje }) {
   if (!isOpen) return null;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import BarraBusqueda from '../components/BarraBusqueda';
-import GridProductos from '../components/GridProductos';
-import PanelCarrito from '../components/PanelCarrito';
+import BarraBusqueda from '../components/ventas/BarraBusqueda';
+import GridProductos from '../components/ventas/GridProductos';
+import PanelCarrito from '../components/ventas/PanelCarrito';
 
 export default function VentasPage() {
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import BotonEditar from './BotonEditar';
-import BotonEliminar from './BotonEliminar';
+import BotonEditar from '../ui/BotonEditar';
+import BotonEliminar from '../ui/BotonEliminar';
 import { PlusCircle} from 'lucide-react'; // Necesitas instalar lucide-react
 
 export default function TarjetaProducto({ producto, mostrarVender = true, onEditClick, onDeleteClick, onAgregarAlCarrito }) {

@@ -1,7 +1,7 @@
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
-import Tema from './components/ThemeToggle';
+import Tema from './components/layout/ThemeToggle';
 import Inventario from './pages/InventarioPage';
 import Central from './pages/CentralLayout';
 import Ventas from './pages/VentasPage';

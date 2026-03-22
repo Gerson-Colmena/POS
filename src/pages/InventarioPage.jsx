@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
-import BarraBusqueda from '../components/BarraBusqueda';
-import ModalAñadirProducto from '../components/ModalAñadirProducto';
-import ModalEditarProducto from '../components/ModalEditarProducto'; // 1. Faltaba importar este modal
-import Notificacion from '../components/Notificacion';
-import TarjetaProducto from '../components/TarjetaProducto';
-import ModalConfirmacion from '../components/ModalConfirmacion';
+import BarraBusqueda from '../components/ventas/BarraBusqueda';
+import ModalAñadirProducto from '../components/inventario/ModalAñadirProducto';
+import ModalEditarProducto from '../components/inventario/ModalEditarProducto'; // 1. Faltaba importar este modal
+import Notificacion from '../components/notificaciones/Notificacion';
+import TarjetaProducto from '../components/ventas/TarjetaProducto';
+import ModalConfirmacion from '../components/inventario/ModalConfirmacion';
 
 export default function InventarioPage() {
     // Estados para la notificación global y el modal de Añadir

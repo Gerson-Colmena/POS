@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Search, Hexagon } from 'lucide-react';
-import Notificaciones from './Notificaciones'; // O la ruta donde lo hayas guardado
+import Notificaciones from '../notificaciones/Notificaciones'; // O la ruta donde lo hayas guardado
 import MenuPerfil from './MenuPerfil';
 
 export default function Navbar() {

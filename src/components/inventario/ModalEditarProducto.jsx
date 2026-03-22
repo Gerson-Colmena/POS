@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Package, X, UploadCloud, ImageIcon, Sparkles } from 'lucide-react'; // 1. Nuevos iconos
-import BotonUI from './BotonUI';
-import Notificacion from './Notificacion';
+import BotonUI from '../ui/BotonUI';
+import Notificacion from '../notificaciones/Notificacion';
 
 // Ya no usamos useEffect, como acordamos en el "Senior fix" anterior
 export default function ModalEditarProducto({ onClose, producto, onSaveSucces }) {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PackagePlus, X, UploadCloud, ImageIcon, Sparkles } from 'lucide-react';
-import BotonUI from './BotonUI';
+import BotonUI from '../ui/BotonUI';
 
 export default function ModalAñadirProducto({ isOpen, onClose, onConfirm }) {
     
