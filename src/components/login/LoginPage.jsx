@@ -3,13 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 export default function LoginPage() {
   
     const navigate = useNavigate(); 
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Aquí ira mi lógica de Supabase después
-        // Por ahora, simulamos que entra con éxito:
-        navigate('/Ventas'); 
+        // Simulamos sesión activa — Supabase lo reemplazará
+        localStorage.setItem('sesion_activa', 'true');
+        navigate('/ventas');
     };
+    
 return (
     <>
         {/*aqui esta todo el componente del login el pequeño*/}
@@ -66,7 +66,7 @@ return (
                     type="submit"
                     className="flex w-full justify-center rounded-md bg-indigo-600 dark:bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-500 dark:hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors duration-300"
                 >
-                    Sign in
+                    Iniciar Sesion
                 </button>
                 </div>
             </form>
