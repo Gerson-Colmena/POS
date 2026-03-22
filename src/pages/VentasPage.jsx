@@ -49,6 +49,9 @@ export default function VentasPage() {
       carritoActual.filter(item => item.id !== idParaBorrar)
     );
   };    
+  const handleVaciarCarrito = () => {
+    setItemsCarrito([]);
+  };
   // === LA MAGIA DEL BUSCADOR ===
   // Filtramos la lista original basándonos en lo que el usuario escribió
   const productosFiltrados = productosDisponibles.filter((producto) => {
@@ -97,7 +100,7 @@ export default function VentasPage() {
                 <PanelCarrito 
                     itemsCarrito={itemsCarrito} 
                     onEliminarItem={handleEliminarItem} 
-                
+                    onVaciarCarrito={handleVaciarCarrito}
                 />
             </div>  
 

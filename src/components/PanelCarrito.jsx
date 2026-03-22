@@ -1,18 +1,76 @@
 import React from 'react'; // ¡Ya no hay useState!
 import { FileText, Trash2 } from 'lucide-react';
+import jsPDF from 'jspdf';               // 1. Importamos el creador de PDFs
+import autoTable from 'jspdf-autotable';              // 2. Importamos el creador de tablas
 
 // El componente ahora es "tonto": solo dibuja lo que el Padre le manda
-export default function PanelCarrito({ itemsCarrito=[], onEliminarItem }) {
+export default function PanelCarrito({ itemsCarrito=[], onEliminarItem, onVaciarCarrito }) {
     
     // El total se calcula usando los datos que llegaron desde el Padre
     const total = itemsCarrito.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
 
     const handleFinalizarCompra = () => {
+        // 1. Si el carrito está vacío, mostramos error y SALIMOS de la función
         if (itemsCarrito.length === 0) {
             alert('El carrito está vacío. Añade productos primero.');
             return;
         }
-        alert('Generando Ticket en PDF y registrando venta en base de datos...');
+
+        // ==========================================
+        // 2. EL ESPACIO PARA SUPABASE (Próximamente)
+        // ==========================================
+        const ventaParaBaseDeDatos = {
+            fecha: new Date().toISOString(),
+            total: total,
+            productos: itemsCarrito
+        };
+        console.log("Simulando guardado en Base de Datos...", ventaParaBaseDeDatos);
+        // await supabase.from('ventas').insert(ventaParaBaseDeDatos);
+
+        // ==========================================
+        // 3. GENERACIÓN DEL TICKET PDF
+        // ==========================================
+        const doc = new jsPDF();
+        
+        
+        doc.setFontSize(20);
+        doc.text("Ticket de Venta - POS Gerson", 14, 22);
+        
+        doc.setFontSize(11);
+        doc.text(`Fecha: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, 14, 32);
+        doc.text(`Cajero: Turno Mañana`, 14, 38);
+
+        const columnas = ["Producto", "Precio Unit.", "Cant.", "Subtotal"];
+        const filas = itemsCarrito.map(item => [
+            item.nombre,
+            `Bs. ${item.precio.toFixed(2)}`,
+            item.cantidad,
+            `Bs. ${(item.precio * item.cantidad).toFixed(2)}`
+        ]);
+
+        autoTable(doc, {
+            startY: 45, 
+            head: [columnas],
+            body: filas,
+            theme: 'striped',
+            headStyles: { fillColor: [79, 70, 229] } 
+        });
+
+        const posicionYFinal = doc.lastAutoTable.finalY + 15;
+        doc.setFontSize(14);
+        
+        // ¡Cuidado aquí! Usamos template literals correctos (backticks)
+        doc.text(`TOTAL A PAGAR: Bs. ${total.toFixed(2)}`, 14, posicionYFinal);
+
+        // Descargamos el archivo
+        // 3. CAMBIO AQUÍ: Extraemos el Date.now() a una variable para que tu linter no llore
+        doc.save("Ticket_Venta.pdf");
+
+        // ==========================================
+        // 4. LIMPIEZA Y NOTIFICACIÓN AL USUARIO
+        // ==========================================
+        onVaciarCarrito();
+        alert('¡Venta registrada con éxito y ticket generado!');
     };
 
     return (

@@ -5,10 +5,8 @@ import Tema from './components/ThemeToggle';
 import Inventario from './pages/InventarioPage';
 import Central from './pages/CentralLayout';
 import Ventas from './pages/VentasPage';
-import Reportes from './pages/ReportesPage';
-import Dashboard from './pages/DashboardPage';
-import './App.css'
 import DashboardPage from './pages/DashboardPage';
+import './App.css'
 
 function App() {
   
@@ -27,7 +25,7 @@ function App() {
           <Route element={<Central />}>
             <Route path="/Ventas" element={<Ventas/>} />
             <Route path="/Inventario" element={<Inventario/>} />
-            <Route path="/Reportes" element={<Reportes/>} />
+            
             <Route path="/Dashboard" element={<DashboardPage/>} />
           </Route>
         </Routes>
