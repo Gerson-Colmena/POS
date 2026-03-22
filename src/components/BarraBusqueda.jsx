@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, Filter, Check } from 'lucide-react';
 
-export default function BarraBusqueda({ busqueda, setBusqueda, categoriaActiva, setCategoriaActiva }) {
+export default function BarraBusqueda({ busqueda, setBusqueda, categoriaActiva, setCategoriaActiva, categorias }) {
     // 1. Estados para el menú desplegable
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const filterRef = useRef(null);
 
     // 2. DATOS SIMULADOS (Mocks) - Mañana vendrán de la base de datos
-    const categoriasSimuladas = ['Todas', 'Termos', 'Papelería', 'Accesorios', 'Cuero'];
+    
 
     // 3. Efecto para cerrar el menú al hacer clic afuera
     useEffect(() => {
@@ -53,17 +53,17 @@ export default function BarraBusqueda({ busqueda, setBusqueda, categoriaActiva, 
             {/* EL MENÚ DESPLEGABLE */}
             {isFilterOpen && (
             <div className="absolute right-0 z-20 mt-2 w-48 origin-top-right rounded-xl bg-white dark:bg-gray-800 py-2 shadow-lg ring-1 ring-black/5 dark:ring-white/10 focus:outline-none overflow-hidden transition-all">
-                {categoriasSimuladas.map((cat) => (
+                {/* 3. Ahora usamos la prop 'categorias' que nos mandó el Padre */}
+                {categorias.map((cat) => (
                 <button
                     key={cat}
                     onClick={() => {
                     setCategoriaActiva(cat);
-                    setIsFilterOpen(false); // Cierra el menú al elegir
+                    setIsFilterOpen(false);
                     }}
                     className="w-full flex items-center justify-between px-4 py-2 text-sm text-left text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                 >
                     {cat}
-                    {/* Dibuja un check si es la categoría actual */}
                     {categoriaActiva === cat && <Check size={16} className="text-indigo-600 dark:text-indigo-400" />}
                 </button>
                 ))}

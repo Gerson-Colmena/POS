@@ -29,7 +29,13 @@ export default function InventarioPage() {
     ]);
 
     // === LÓGICA DEL MODAL DE AÑADIR ===
-    const handleGuardarProducto = () => {
+    // 1. Ahora recibe el 'nuevoProducto' que le manda el Modal
+    const handleGuardarProducto = (nuevoProducto) => { 
+        
+        // 2. MAGIA DE REACT: Clonamos la lista anterior y le pegamos el nuevo producto al final
+        setProductosDisponibles(prevProductos => [...prevProductos, nuevoProducto]);
+        
+        // 3. Cerramos y notificamos
         setIsModalOpen(false);
         setNotificacion({ mensaje: '¡Producto agregado al inventario con éxito!', tipo: 'exito' });
     };

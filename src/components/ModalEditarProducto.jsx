@@ -10,6 +10,7 @@ export default function ModalEditarProducto({ onClose, producto, onSaveSucces })
   const [nombre, setNombre] = useState(producto.nombre);
   const [precio, setPrecio] = useState(producto.precio);
   const [stock, setStock] = useState(producto.stock);
+  const [categoria, setCategoria] = useState(producto.categoria || 'Accesorios');
   
   // 2. NUEVO: Estado para la imagen. Iniciará con la URL de mock (ej. tailwindui.com/...)
   const [imagenUrl, setImagenUrl] = useState(producto.imagenUrl);
@@ -50,6 +51,7 @@ export default function ModalEditarProducto({ onClose, producto, onSaveSucces })
         nombre,
         precio: parseFloat(precio),
         stock: parseInt(stock),
+        categoria,
         // 4. Se guarda la nueva Data URL temporal (Mañana será la URL final de Supabase)
         imagenUrl 
     };
@@ -141,6 +143,21 @@ export default function ModalEditarProducto({ onClose, producto, onSaveSucces })
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre del Producto</label>
             <input required type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} className="w-full px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          {/* NUEVO: SELECTOR DE CATEGORÍA */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Categoría</label>
+            <select 
+                value={categoria} 
+                onChange={(e) => setCategoria(e.target.value)} 
+                className="w-full px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+            >
+                <option value="Accesorios">Accesorios</option>
+                <option value="Papelería">Papelería</option>
+                <option value="Bebidas">Bebidas</option>
+                <option value="Cuero">Cuero</option>
+                <option value="Electrónica">Electrónica</option>
+            </select>
           </div>
 
           {/* Precio y Stock (Sin cambios) */}

@@ -3,7 +3,7 @@ import BotonEditar from './BotonEditar';
 import BotonEliminar from './BotonEliminar';
 import { PlusCircle} from 'lucide-react'; // Necesitas instalar lucide-react
 
-export default function TarjetaProducto({ producto, mostrarVender = true, onEditClick, onDeleteClick }) {
+export default function TarjetaProducto({ producto, mostrarVender = true, onEditClick, onDeleteClick, onAgregarAlCarrito }) {
     // Formateador de moneda (Bolivianos en este ejemplo)
     const formatearPrecio = (valor) => {
         return new Intl.NumberFormat('es-BO', { style: 'currency', currency: 'BOB' }).format(valor);
@@ -57,8 +57,13 @@ export default function TarjetaProducto({ producto, mostrarVender = true, onEdit
 
             {/* Botón primario: Añadir (Para Ventas) */}
             {/* Solo dibuja el botón si mostrarVender es true */}
+            {/* Botón primario: Añadir (Para Ventas) */}
             {mostrarVender && (
-                <button className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-1 py-2 rounded-lg shadow-sm transition-all active:scale-95">
+                // 2. Añadimos el onClick aquí
+                <button 
+                    onClick={() => onAgregarAlCarrito(producto)}
+                    className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg shadow-sm transition-all active:scale-95"
+                >
                     <PlusCircle size={18} />
                     Vender
                 </button>
